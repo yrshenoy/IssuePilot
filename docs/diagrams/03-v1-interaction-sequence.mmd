@@ -1,0 +1,23 @@
+sequenceDiagram
+    participant Issue as Issue management system
+    participant Mail as Notification inbox
+    participant Trigger as Email trigger
+    participant Codex as Codex triage skill
+    participant History as Issue search
+    participant Repo as Source repository
+    participant Slack as Team Slack channel
+    actor Engineer as Reviewing engineer
+    Issue->>Mail: New issue notification
+    Mail->>Trigger: New qualifying email
+    Trigger->>Codex: Invoke skill for incoming issue
+    Codex->>Issue: Fetch issue details
+    Issue-->>Codex: Description and available stack trace
+    Codex->>History: Search similar past issues
+    History-->>Codex: Related issues and ownership history
+    opt Historical evidence is insufficient
+        Codex->>Repo: Inspect code history relevant to stack trace
+        Repo-->>Codex: Candidate changes and references
+    end
+    Codex->>Slack: Post triage summary and evidence
+    Engineer->>Slack: Review during morning triage
+    Note over Engineer,Slack: Engineers validate recommendations before actions
