@@ -1,0 +1,23 @@
+flowchart TD
+    A["Receive issue and load details"] --> B["Retrieve and retain similar historical issues"]
+    B --> C{"Most likely owning team?"}
+    C -->|Other team| D["Recommend reassignment with historical evidence"]
+    C -->|Our team| E{"Historical remediation pattern?"}
+    C -->|Uncertain| F["Flag ownership for human investigation"]
+    E -->|Customer data correction| G["Recommend expert review of data-fix possibility"]
+    E -->|Database performance| H["Recommend performance-team investigation"]
+    E -->|Backend configuration| I["Suggest historical switch for human validation"]
+    E -->|Unclear| J{"Stack trace available?"}
+    J -->|Yes| K["Inspect relevant recent code changes"]
+    J -->|No| L["Further investigation required"]
+    K --> M{"Credible code regression candidate?"}
+    M -->|Yes| N["Report suspected change and supporting evidence"]
+    M -->|No| L
+    D --> O["Publish advisory findings to Slack"]
+    F --> O
+    G --> O
+    H --> O
+    I --> O
+    L --> O
+    N --> O
+    O --> P["Human reviews and decides"]
