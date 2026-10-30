@@ -1,0 +1,14 @@
+flowchart TD
+    A["V1 reports plausible code regression"] --> B["Gather evidence and suspected introducing change"]
+    B --> C["Enumerate supported release branches"]
+    C --> D["Inspect ancestry, cherry-picks, reverts and code path"]
+    D --> E["Apply targeted tests where feasible"]
+    E --> F{"Branch impact assessment"}
+    F -->|Reproduced| G["Confirmed affected"]
+    F -->|Evidence without reproduction| H["Potentially affected"]
+    F -->|Negative evidence| I["Not affected"]
+    F -->|Insufficient evidence| J["Unknown - review required"]
+    G --> K["Publish release impact matrix with evidence"]
+    H --> K
+    I --> K
+    J --> K
