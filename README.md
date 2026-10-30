@@ -23,25 +23,28 @@ Incoming ERP production issues often required repetitive historical issue search
 
 ## The V1 approach — production-used
 
-An incoming issue-notification email triggered a Codex skill. The skill retrieved the issue, searched related historical issues, recommended the likely owning team, recognized recurring remediation patterns, and investigated code history when useful. It posted an **advisory** report to Slack. Engineers reviewed the findings during their regular morning triage and independently chose whether to act.
+An incoming issue-notification email triggered a Codex skill. The skill retrieved the issue, checked **other still-open issues for potential duplicates**, searched historical issues for ownership and remediation clues, recommended the likely owning team, recognized recurring resolution patterns, and investigated code history when useful. It posted an **advisory** report to Slack. Engineers reviewed the findings during their regular morning triage and independently chose whether to act.
 
 ```mermaid
 flowchart LR
     A["New ERP production issue"] --> B["Issue notification email"]
     B --> C["Trigger Codex triage skill"]
-    C --> D["Query issue system and historical issues"]
-    C --> E["Inspect stack traces and code history if needed"]
-    D --> F["Evidence-based triage findings"]
-    E --> F
-    F --> G["Publish summary to team Slack channel"]
-    G --> H["Morning engineering review"]
-    H --> I["Human decides next action"]
+    C --> D["Check active issues for possible duplicates"]
+    C --> E["Search historical issues for ownership and past resolutions"]
+    C --> F["Inspect stack traces and code history if needed"]
+    D --> G["Evidence-based triage findings"]
+    E --> G
+    F --> G
+    G --> H["Publish summary to team Slack channel"]
+    H --> I["Morning engineering review"]
+    I --> J["Human decides next action"]
 ```
 
 The diagram is conceptual and omits private implementation details; it is not a copy of the employer's infrastructure.
 
 ## Production lessons
 
+- **Potential duplicates need human confirmation.** Similar open issues can be related without representing the same defect; the skill suggested candidates rather than automatically closing or merging issues.
 - **Historical recommendations are fallible.** Some older issues referenced backend switches that had since been deprecated.
 - **Data fixes require domain expertise.** Customer production data changes were never appropriate to authorize solely from AI output.
 - **Probable cause is not proven cause.** Recent commits and stack traces require human validation.
@@ -53,7 +56,8 @@ The diagram is conceptual and omits private implementation details; it is not a 
 | Capability | Production-used V1 | Planned V2 |
 | --- | :---: | :---: |
 | Email-triggered Codex triage | Yes | Retain |
-| Similar issue retrieval and team suggestions | Yes | Improve |
+| Potential duplicate detection among still-open issues | Yes | Improve |
+| Historical issue retrieval and team suggestions | Yes | Improve |
 | Resolution-pattern and possible regression investigation | Yes | Improve |
 | Slack reporting and human review | Yes | Retain |
 | Supported-release branch impact matrix | No | Planned |
