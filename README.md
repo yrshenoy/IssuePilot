@@ -11,7 +11,7 @@
 | Production-used V1 | A **Codex skill** triggered when an issue-notification email arrived in the team inbox |
 | Operating volume | Approximately **40–50 incoming issues per month** |
 | Adoption | Used for **every incoming issue** in the team's process for several months |
-| Collaboration | Co-developed with a **peer engineering manager and a junior engineer** |
+| Collaboration | Co-developed with a **peer engineering manager** |
 | Delivery | Findings were published to a **Slack channel** for engineers' morning review |
 | Decisions | **Human-approved** recommendations; no autonomous production fixes |
 | Feedback | Positive qualitative feedback; **no measured time-savings or accuracy rates** |
@@ -76,6 +76,6 @@ The diagram is conceptual and omits private implementation details; it is not a 
 
 ## Project status and intended audience
 
-This repository is **documentation and synthetic examples**, not a runnable reproduction of the original skill. It is intended to demonstrate practical AI adoption, operational judgment, cross-role collaboration, and incremental engineering planning for Engineering Manager and Senior Engineering Manager audiences.
+This repository is **documentation and synthetic examples**, not a runnable reproduction of the original skill. It is intended to demonstrate practical AI adoption, operational judgment, collaboration between engineering managers, and incremental engineering planning for Engineering Manager and Senior Engineering Manager audiences.
 
 **Privacy and IP boundary:** No proprietary prompts, incident payloads, customer information, source code, authentication details, or internal issue identifiers belong in this repository. See [publication notice](NOTICE.md).
