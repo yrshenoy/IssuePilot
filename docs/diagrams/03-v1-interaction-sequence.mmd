@@ -12,12 +12,14 @@ sequenceDiagram
     Trigger->>Codex: Invoke skill for incoming issue
     Codex->>Issue: Fetch issue details
     Issue-->>Codex: Description and available stack trace
+    Codex->>Issue: Search still-open issues for potential duplicates
+    Issue-->>Codex: Candidate active issue links and context
     Codex->>History: Search similar past issues
     History-->>Codex: Related issues and ownership history
     opt Historical evidence is insufficient
         Codex->>Repo: Inspect code history relevant to stack trace
         Repo-->>Codex: Candidate changes and references
     end
-    Codex->>Slack: Post triage summary and evidence
+    Codex->>Slack: Post duplicate candidates, triage summary and evidence
     Engineer->>Slack: Review during morning triage
     Note over Engineer,Slack: Engineers validate recommendations before actions
