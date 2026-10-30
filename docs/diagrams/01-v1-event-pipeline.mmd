@@ -1,0 +1,10 @@
+flowchart LR
+    A["New ERP production issue"] --> B["Issue notification email"]
+    B --> C["Trigger Codex triage skill"]
+    C --> D["Query issue system and historical issues"]
+    C --> E["Inspect stack traces and code history if needed"]
+    D --> F["Evidence-based triage findings"]
+    E --> F
+    F --> G["Publish summary to team Slack channel"]
+    G --> H["Morning engineering review"]
+    H --> I["Human decides next action"]
