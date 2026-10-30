@@ -12,7 +12,7 @@ The workflow was **used for every incoming issue for several months**. Engineers
 
 ## Team and leadership contribution
 
-The workflow was **co-developed with a peer engineering manager and a junior engineer**. This project illustrates cross-role collaboration and introduction of AI-assisted analysis into a repeatable production support process. It would be inaccurate to imply that one person wrote or owned all the implementation or that the skill resolved issues autonomously.
+The workflow was **co-developed with a peer engineering manager**. This project illustrates collaboration between engineering managers and the introduction of AI-assisted analysis into a repeatable production support process. It would be inaccurate to imply that one person wrote or owned all the implementation or that the skill resolved issues autonomously.
 
 ## Problem and goals
 
@@ -57,7 +57,7 @@ The public [triage decision diagram](architecture.md#triage-recommendation-logic
 
 ## Leadership interpretation
 
-The work demonstrates identifying a repetitive operational workflow, collaborating across roles to introduce AI assistance, placing recommendations where engineers already work, and deliberately retaining human authority for production decisions. A public portfolio should describe these contributions without overstating individual ownership or measurable outcomes.
+The work demonstrates identifying a repetitive operational workflow, collaborating with a peer engineering manager to introduce AI assistance, placing recommendations where engineers already work, and deliberately retaining human authority for production decisions. A public portfolio should describe these contributions without overstating individual ownership or measurable outcomes.
 
 ## Retrospective priorities
 
