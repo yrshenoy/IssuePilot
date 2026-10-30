@@ -6,7 +6,7 @@
 
 ## Executive overview
 
-An engineering team dealing with approximately **40–50 incoming ERP production issues per month** adopted an email-triggered Codex skill to assist initial investigation. The skill was invoked when a new issue-notification email arrived, queried the issue system for details and similar historical issues, and published findings to a team Slack channel. Engineers reviewed the findings during their morning triage routine before making decisions.
+An engineering team dealing with approximately **40–50 incoming ERP production issues per month** adopted an email-triggered Codex skill to assist initial investigation. The skill was invoked when a new issue-notification email arrived, queried the issue system for details, checked for possible duplicates among still-open issues, searched historical issues for resolution clues, and published findings to a team Slack channel. Engineers reviewed the findings during their morning triage routine before making decisions.
 
 The workflow was **used for every incoming issue for several months**. Engineers gave **positive qualitative feedback**, but no rigorous baseline, quantified time savings, routing precision or recommendation acceptance rate was recorded.
 
@@ -16,9 +16,9 @@ The workflow was **co-developed with a peer engineering manager and a junior eng
 
 ## Problem and goals
 
-**Existing work:** Engineers reviewed new issue descriptions, searched historical cases, identified ownership, checked earlier remedies, and occasionally investigated stack traces and recent code changes.
+**Existing work:** Engineers reviewed new issue descriptions, checked for potentially duplicate open issues, searched historical cases, identified ownership, checked earlier remedies, and occasionally investigated stack traces and recent code changes.
 
-**Goal:** Supply an evidence-rich first-pass triage report so the engineering team could review suspected ownership, past patterns and likely investigation paths together.
+**Goal:** Supply an evidence-rich first-pass triage report so the engineering team could review possible duplicate open issues, suspected ownership, past patterns and likely investigation paths together.
 
 **Explicit non-goal:** Allowing AI to change production data, enable backend settings, reassign tickets, merge fixes, or deploy releases without human approval.
 
@@ -26,12 +26,13 @@ The workflow was **co-developed with a peer engineering manager and a junior eng
 
 1. **Email trigger:** A new enterprise issue generated an email notification in the team inbox, which triggered execution of a Codex skill.
 2. **Issue context:** The skill retrieved the full issue details from an internal issue-management tool.
-3. **Historical search:** It searched for comparable issues and retained a set of relevant historical references.
-4. **Ownership recommendation:** It used assigned-team history to recommend the likely responsible team, including a suggested redirect when another team appeared responsible.
-5. **Past remediation clues:** For issues plausibly belonging to the team, it looked for prior customer-data corrections, database/performance-team escalations, and backend configuration-switch fixes.
-6. **Code investigation:** Where prior issues did not provide a useful resolution, it examined available stack traces and relevant recent code changes, presenting a suspected regression and a possible introducing change when supported by evidence.
-7. **Slack report:** It published the triage findings, uncertainty and relevant references to a Slack channel.
-8. **Human review:** Engineers reviewed the output as part of their morning issue-triage process, validating, rejecting or escalating recommendations before taking action.
+3. **Active duplicate check:** It searched issues that were **still open** for possible duplicates of the incoming issue and surfaced candidate matches for engineer verification. This was different from searching older issues for how similar problems had been solved.
+4. **Historical search:** It searched comparable historical issues and retained relevant references for ownership and remediation analysis.
+5. **Ownership recommendation:** It used assigned-team history to recommend the likely responsible team, including a suggested redirect when another team appeared responsible.
+6. **Past remediation clues:** For issues plausibly belonging to the team, it looked for prior customer-data corrections, database/performance-team escalations, and backend configuration-switch fixes.
+7. **Code investigation:** Where prior issues did not provide a useful resolution, it examined available stack traces and relevant recent code changes, presenting a suspected regression and a possible introducing change when supported by evidence.
+8. **Slack report:** It published the triage findings, including possible live-issue duplicates, uncertainty and relevant references to a Slack channel.
+9. **Human review:** Engineers reviewed the output as part of their morning issue-triage process, validating, rejecting or escalating recommendations before taking action.
 
 The public [triage decision diagram](architecture.md#triage-recommendation-logic) is a conceptual representation of this flow, not a reproduction of internal orchestration details.
 
@@ -39,6 +40,7 @@ The public [triage decision diagram](architecture.md#triage-recommendation-logic
 
 | Observed issue | Why it mattered | Learning / improvement opportunity |
 | --- | --- | --- |
+| Potential duplicate matches among still-open issues required verification | Similar symptoms do not necessarily mean the same underlying defect | Present active issue links as candidates; engineers decide whether issues are genuinely duplicates |
 | Older cases referenced deprecated backend switches | Historical similarity is not proof a fix still applies | Explicit recency and current-configuration validation before suggesting an action |
 | Customer production data problems required expert judgment | A historical data fix could be dangerous or context-specific | Keep recommendations advisory; require authorized, domain-expert review |
 | Team-routing hints came from historical assignments | Similarity can be misleading or reflect outdated ownership | Retain supporting cases and surface uncertainty instead of automatic reassignment |
@@ -49,7 +51,7 @@ The public [triage decision diagram](architecture.md#triage-recommendation-logic
 
 **Observed:** Sustained production usage over several months; processing approximately 40–50 incoming issues monthly; integration into morning Slack review; positive individual feedback from engineers.
 
-**Not measured:** Mean time to triage, hours saved, code-regression identification accuracy, ownership prediction precision, incident resolution time, or SLA improvements attributable to the skill.
+**Not measured:** Duplicate-detection precision, mean time to triage, hours saved, code-regression identification accuracy, ownership prediction precision, incident resolution time, or SLA improvements attributable to the skill.
 
 **Not delivered in V1:** Automated patch generation, release impact matrices, draft merge requests, autonomous production remediation or deployment.
 
@@ -59,7 +61,8 @@ The work demonstrates identifying a repetitive operational workflow, collaborati
 
 ## Retrospective priorities
 
-- Capture reviewer accept/reject feedback and reasons for override.
+- Capture reviewer accept/reject feedback and reasons for override, including suggested duplicates.
+- Separate *active duplicate candidates* from *historical resolution examples* in reports.
 - Rank historical issues using recency, ownership quality and verified current guidance.
 - Check remediation ideas against current configuration and deprecation data.
 - Add regression test cases for misleading but superficially similar historical issues.
