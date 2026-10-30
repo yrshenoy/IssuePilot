@@ -6,6 +6,14 @@
 **Trigger:** New issue email received  
 **Status:** AI-generated suggestions awaiting engineer review
 
+## Potential duplicates among still-open issues
+
+| Fictional active issue | Status | Why it may be related | Required review |
+| --- | --- | --- | --- |
+| `DEMO-1417` | Open | Similar invoice-preview exception and component | Engineer must confirm scope, reproduction and underlying cause before treating as a duplicate |
+
+**Assessment:** Possible duplicate only — do not automatically merge or close either issue. This active-issue search is distinct from the historical cases below.
+
 ## Similar historical issues
 
 | Fictional issue | Similarity clue | Human-review note |
@@ -28,6 +36,7 @@ The fictional stack trace points to `PreviewRenderer.render()`. A code change in
 
 ## Recommended human actions
 
+- Check whether still-open `DEMO-1417` is actually the same defect; leave issues separate until verified.
 - Verify the owning team with current team boundaries.
 - Check whether the issue reproduces in the affected release.
 - Do not apply the historical deprecated switch.
