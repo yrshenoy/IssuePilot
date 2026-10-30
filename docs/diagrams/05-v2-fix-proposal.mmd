@@ -1,0 +1,15 @@
+flowchart TD
+    A["Potential regression and branch impact assessment"] --> B{"Human-approved investigation scope?"}
+    B -->|No| X["Stop and report findings only"]
+    B -->|Yes| C["Prepare isolated workspace from affected release branch"]
+    C --> D["Create dedicated candidate-fix branch"]
+    D --> E["Codex proposes minimal fix"]
+    E --> F["Run targeted tests and static checks"]
+    F --> G{"Checks pass?"}
+    G -->|No| H["Report failed validation and draft patch"]
+    G -->|Yes| I["Open draft merge request with evidence"]
+    I --> J["Add link, impact matrix and checks to triage report"]
+    H --> J
+    J --> K["Publish results to Slack"]
+    K --> L["Engineering code review and release approval"]
+    L --> M["Normal merge and deployment process only"]
