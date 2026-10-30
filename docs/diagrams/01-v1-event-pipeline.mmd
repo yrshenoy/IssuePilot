@@ -1,10 +1,12 @@
 flowchart LR
     A["New ERP production issue"] --> B["Issue notification email"]
     B --> C["Trigger Codex triage skill"]
-    C --> D["Query issue system and historical issues"]
-    C --> E["Inspect stack traces and code history if needed"]
-    D --> F["Evidence-based triage findings"]
-    E --> F
-    F --> G["Publish summary to team Slack channel"]
-    G --> H["Morning engineering review"]
-    H --> I["Human decides next action"]
+    C --> D["Check active issues for possible duplicates"]
+    C --> E["Search historical issues for ownership and past resolutions"]
+    C --> F["Inspect stack traces and code history if needed"]
+    D --> G["Evidence-based triage findings"]
+    E --> G
+    F --> G
+    G --> H["Publish summary to team Slack channel"]
+    H --> I["Morning engineering review"]
+    I --> J["Human decides next action"]
