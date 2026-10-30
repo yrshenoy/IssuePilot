@@ -1,0 +1,42 @@
+{
+  "notice": "All issue IDs and contents are synthetic. Not from any employer.",
+  "issues": [
+    {
+      "id": "DEMO-1420",
+      "type": "incoming",
+      "title": "Invoice preview fails for one workflow",
+      "assigned_team": null,
+      "component": "PreviewRenderer",
+      "notification": "email",
+      "has_stack_trace": true,
+      "fictional": true
+    },
+    {
+      "id": "DEMO-0931",
+      "type": "historical",
+      "title": "Legacy preview flag fixes earlier invoice behavior",
+      "assigned_team": "Documents Engineering",
+      "resolution": "enable LEGACY_PREVIEW_MODE",
+      "remediation_status": "deprecated",
+      "fictional": true
+    },
+    {
+      "id": "DEMO-1220",
+      "type": "historical",
+      "title": "Preview render exception in document service",
+      "assigned_team": "Documents Engineering",
+      "resolution": "inspect renderer state and run targeted tests",
+      "remediation_status": "current_example",
+      "fictional": true
+    },
+    {
+      "id": "DEMO-1388",
+      "type": "historical",
+      "title": "Configuration switch removed after code refactor",
+      "assigned_team": "Documents Engineering",
+      "resolution": "avoid deprecated flag; review new code path",
+      "remediation_status": "current_example",
+      "fictional": true
+    }
+  ]
+}
