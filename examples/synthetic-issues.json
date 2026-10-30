@@ -9,6 +9,18 @@
       "component": "PreviewRenderer",
       "notification": "email",
       "has_stack_trace": true,
+      "fictional": true,
+      "status": "open"
+    },
+    {
+      "id": "DEMO-1417",
+      "type": "active",
+      "status": "open",
+      "title": "Invoice preview exception for another fictional account",
+      "assigned_team": "Documents Engineering",
+      "component": "PreviewRenderer",
+      "possible_duplicate_of": "DEMO-1420",
+      "duplicate_confirmed": false,
       "fictional": true
     },
     {
@@ -18,7 +30,8 @@
       "assigned_team": "Documents Engineering",
       "resolution": "enable LEGACY_PREVIEW_MODE",
       "remediation_status": "deprecated",
-      "fictional": true
+      "fictional": true,
+      "status": "closed"
     },
     {
       "id": "DEMO-1220",
@@ -27,7 +40,8 @@
       "assigned_team": "Documents Engineering",
       "resolution": "inspect renderer state and run targeted tests",
       "remediation_status": "current_example",
-      "fictional": true
+      "fictional": true,
+      "status": "closed"
     },
     {
       "id": "DEMO-1388",
@@ -36,7 +50,8 @@
       "assigned_team": "Documents Engineering",
       "resolution": "avoid deprecated flag; review new code path",
       "remediation_status": "current_example",
-      "fictional": true
+      "fictional": true,
+      "status": "closed"
     }
   ]
 }
