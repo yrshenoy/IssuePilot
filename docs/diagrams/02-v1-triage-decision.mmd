@@ -1,5 +1,9 @@
 flowchart TD
-    A["Receive issue and load details"] --> B["Retrieve and retain similar historical issues"]
+    A["Receive issue and load details"] --> AA["Search still-open issues for possible duplicates"]
+    AA --> AB{"Potential duplicate?"}
+    AB -->|Yes| AC["Record candidate issue links for human verification"]
+    AB -->|No| B["Retrieve and retain similar historical issues"]
+    AC --> B
     B --> C{"Most likely owning team?"}
     C -->|Other team| D["Recommend reassignment with historical evidence"]
     C -->|Our team| E{"Historical remediation pattern?"}
