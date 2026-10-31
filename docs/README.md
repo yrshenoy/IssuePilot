@@ -3,6 +3,7 @@
 - [V1 production case study](v1-production-case-study.md)
 - [Architecture and integration boundaries](architecture.md)
 - [Planned V2 roadmap](v2-roadmap.md)
+- [Synthetic POC evaluation results](poc-evaluation-report.md)
 - [Evaluation and safeguards](evaluation-and-guardrails.md)
 - [Editable Mermaid diagrams](diagrams/)
 
