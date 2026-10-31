@@ -109,7 +109,7 @@ Prerequisites, in addition to the app setup above:
 
 1. Install Codex CLI and sign in **for the same OS user running Java**. Confirm that `codex exec --help` runs from a terminal. The Java process must find the Codex CLI executable on its `PATH`; on Windows it defaults to `codex.cmd`, on macOS/Linux to `codex`.
 2. Pull the latest repository files, including `.agents/skills/issue-pilot/SKILL.md`; start Spring Boot from the repository root. Load the synthetic database first.
-3. Open `http://localhost:8080/issues`, choose an issue (such as **2408**), click **Run AI Triage**, and review the report. A single triage job runs at a time; the UI shows a running state or a helpful failure message.
+3. Open `http://localhost:8080/issues`, choose an issue (such as **2408**), and click **Run AI Triage** immediately below the issue heading and status. On completion, the **AI Triage Results** section expands to display the advisory report; you may collapse it while inspecting the issue. The same action is available near the top of `/issue/{id}`. A single triage job runs at a time; the UI shows a running state or a helpful failure message.
 
 If IntelliJ does not inherit your terminal's Codex `PATH`, set the environment variable `CODEX_COMMAND` to the **full path** of the executable (on Windows, typically `codex.cmd`). If you launch the application outside the repo root, set `ISSUEPILOT_CODEX_WORKSPACE` to the **absolute repository directory** containing the skill. These are also configurable via `issuepilot.codex.executable` and `issuepilot.codex.workspace` in Spring configuration. Restart the app after changing environment variables.
 
