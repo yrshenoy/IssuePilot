@@ -177,6 +177,9 @@ public class IssuesView extends VerticalLayout {
                         + " | Team: " + value(issue.getAssignedTeam())
         ));
 
+        // Keep the primary triage action immediately beneath the issue heading and status.
+        detailsPanel.add(new AiTriagePanel(issue.getId(), triageService));
+
         detailsPanel.add(new Paragraph(
                 "Created: " + value(issue.getCreatedAt())
                         + " | Closed: " + value(issue.getClosedAt())
@@ -201,7 +204,6 @@ public class IssuesView extends VerticalLayout {
                 value(issue.getFilesChanged())
         ));
 
-        detailsPanel.add(new AiTriagePanel(issue.getId(), triageService));
     }
 
     private String value(Object value) {
