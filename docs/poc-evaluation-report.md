@@ -74,13 +74,50 @@ The outputs also distinguished the existence of an `AUTOMATED_TEST` *issue recor
 
 ## Recommended next evaluation protocol
 
-1. Commit the actual independent Java/Spring Boot/Vaadin project, Codex skill instructions, and sanitized seeded data (do **not** copy any employer-owned assets).
+1. **Completed:** Commit the independent Java/Spring Boot/Vaadin project, Codex skill instructions, and sanitized seeded data (without employer-owned assets).
 2. Freeze a known dataset and explicit ground truth for each test issue. Include intentionally misleading and no-match cases.
 3. Record the skill version and execution settings.
 4. Run each issue more than once and capture full structured outputs.
 5. Score duplicate candidate precision, correct-team suggestions, supporting citation validity, outdated-fix warnings, and appropriate abstention.
 6. Have at least one human reviewer independently score a subset, documenting disagreements.
 7. Keep **synthetic POC measurements** separate from historical production experience.
+
+## Revised V1 skill — complete eight-scenario regression review (October 31, 2026)
+
+Following the initial baseline, the independent POC skill was revised to add explicit checks for obsolete fixes and contradictory duplicate links, evidence-ranked matches, deployment uncertainty, and functional-owner versus specialist-team routing. These refinements are **skill instructions**, not new integrations or autonomous capabilities.
+
+**Method:** The user ran `$issue-pilot <id>` locally on the revised skill and pasted each generated report for a qualitative review. The revised local API returned **48 records**, matching the committed synthetic SQL fixture. The earlier baseline responses described **52 records**, because the original local environment included four additional manually created demo issues. These are **not fully controlled, identical-corpus trials**. Raw machine-readable outputs, run configurations and independent grading are not retained here.
+
+| ID | Retest objective and observed evidence | Manual outcome |
+| --- | --- | --- |
+| **2401** | Ranked #2007 as strongest domestic-customs duplicate; #2402 related; rejected removed `VALIDATE_CUSTOMS_V1`; found #2010/#2009 and missing domestic test coverage in #2011 | **Pass** |
+| **2402** | Identified #2010 shared-validator refactor as strongest potential regression; #2009 supporting; flagged missing exact error code in candidate comparison, obsolete flag and deployment uncertainty | **Pass** |
+| **2403** | Retrieved DBA precedent #2015 and performance-test record #2026; suggested **Database Performance** as primary with Inventory Engineering consultation, grounded in slow SQL symptoms | **Pass** |
+| **2404** | Retrieved historical refund rounding fix #2021 and automated-test record #2025; found contradictory #2039 → #2022 duplicate reference and excluded CLOSED #2039 from active duplicates | **Pass** |
+| **2405** | Retrieved optimistic-locking fix #2014 and concurrency-test record #2016; rejected unrelated inventory issues and did not infer causation from shared filenames | **Pass** |
+| **2406** | Found no supported loyalty-point duplicate, past fix, regression, test issue, or owner; explicitly rejected routing to Billing Engineering based on “credits” alone | **Pass** |
+| **2407** | Recommended **Identity Engineering** using #2030/#2028/#2029; identified plausible #2029 duplicate and prior callback redirect fix #2030; advised deployment check | **Pass** |
+| **2408** | Rejected carrier API timeout #2036 as false match; found reporting precedent #2031; recommended **Reporting Engineering** as functional owner and Database Performance as collaborator | **Pass** |
+
+**Result:** **8/8 designed scenarios provisionally passed their intended qualitative review**, including both cases that exercised revised ownership routing (#2403 and #2408). This is **not** a verified model accuracy, pass-rate estimate for real-world issues, or evidence of productivity savings. One sample per scenario, cherry-picked scenario coverage and reviewer subjectivity constrain generalization.
+
+### Before-and-after observations
+
+- **#2408 ownership:** The baseline suggested Database Performance as initial owner. The revision suggested Reporting Engineering as functional owner with Database Performance support. This is a better fit for a reporting export whose bottleneck has not yet been localized.
+- **#2403 ownership:** The revision still suggested Database Performance as initial owner when the incoming issue specifically described degraded SQL performance, with Inventory Engineering involved. This avoids a blanket “functional team always owns” rule.
+- **Obsolete and contradictory history:** Revised outputs for #2401/#2402 continued to reject the removed customs flag; #2404 explicitly challenged the misleading duplicate pointer.
+- **Appropriate abstention:** Revised #2406 did not infer a loyalty points owner from terminology alone.
+- **Consistent uncertainty:** Reports noted that code, deployment, logs and executable tests had not been examined.
+
+### Remaining limitations and follow-up
+
+- The revised skill was **not evaluated in controlled repeated trials** or on independent real issue datasets.
+- The historical comparison used **different corpus sizes (52 vs 48)**, so it cannot isolate the skill change as the sole cause of differences.
+- The skill's report format lists seven sections while Codex sometimes produces eight by splitting ownership and next steps; this is a formatting inconsistency, not a substantive triage failure.
+- Next: preserve exact sanitized outputs and skill commit SHA; automate evidence-based checks; run repeated and adversarial tests; independently grade a sample.
+- The Spring Boot integration tests verify seeded data/API behavior; they do **not** test Codex's inference accuracy.
+
+**Code status:** The Java/Vaadin POC, local skill, SQL fixtures and integration tests are committed in this public repository. The original production skill remains private and separate. Proposed V2 branch/fix/merge-request workflows remain unimplemented.
 
 ## Provenance and scope
 
