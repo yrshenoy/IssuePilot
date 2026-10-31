@@ -114,6 +114,10 @@ public class CodexTriageService {
             builder.redirectErrorStream(true);
             builder.redirectOutput(logFile.toFile());
             process = builder.start();
+            // Codex exec may wait for additional prompt input until stdin reaches EOF.
+            // ProcessBuilder opens a pipe by default; we never write to it, so close it
+            // immediately to signal EOF rather than leaving Codex waiting indefinitely.
+            process.getOutputStream().close();
 
             if (!process.waitFor(TIMEOUT.toSeconds(), TimeUnit.SECONDS)) {
                 terminateProcessTree(process);
