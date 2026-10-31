@@ -77,7 +77,7 @@ The diagram is conceptual and omits private implementation details; it is not a 
 
 ## Project status and intended audience
 
-This working tree includes the documentation and synthetic examples plus the independently implemented Java/Vaadin + Spring Boot/H2 local POC, synthetic SQL fixtures, evaluation expectations, and complete Codex triage skill. These application additions are proposed changes pending review. This repository is not a runnable reproduction of the original internal skill. It is intended to demonstrate practical AI adoption, operational judgment, collaboration between engineering managers, and incremental engineering planning for Engineering Manager and Senior Engineering Manager audiences.
+This repository includes the case-study documentation and synthetic examples, along with a committed, independently implemented Java/Vaadin + Spring Boot/H2 local POC, synthetic SQL fixtures, evaluation expectations, integration tests, and the V1 Codex triage skill. The POC is runnable locally using the steps below; it is **not** the original employer-owned production skill or a reproduction of its private integrations. The synthetic evaluation report describes an earlier eight-scenario qualitative baseline; the revised skill instructions have **not yet been rerun** against all eight scenarios. It is intended to demonstrate practical AI adoption, operational judgment, collaboration between engineering managers, and incremental engineering planning for Engineering Manager and Senior Engineering Manager audiences.
 
 **Privacy and IP boundary:** No proprietary prompts, incident payloads, customer information, source code, authentication details, or internal issue identifiers belong in this repository. See [publication notice](NOTICE.md).
 
@@ -110,3 +110,5 @@ $issue-pilot 2401
 ```
 
 Repeat for IDs `2401` through `2408` and compare the evidence with [evaluation expectations](test-data/evaluation_expectations.csv). Codex needs access to the local HTTP endpoints. The skill retrieves the incoming issue, checks other OPEN issues for potential duplicates, searches CLOSED defects and their resolutions, investigates possible feature regressions, identifies relevant automated-test records, and recommends ownership with supporting issue IDs. It reports uncertainty and investigation steps for human review, without changing records. Automated-test issue records describe fictional historical coverage; they are not executable tests in this repository. The skill does not send Slack messages or implement the proposed V2 workflow.
+
+The V1 skill includes explicit checks for misleading duplicate references, deprecated historical remedies, deployment uncertainty, evidence-ranked matches, and functional-owner versus specialist-team recommendations. These refinements were added **after** the initial eight-scenario evaluation; rerun the scenarios before attributing the baseline results to this revision.
