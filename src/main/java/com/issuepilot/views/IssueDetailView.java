@@ -45,6 +45,9 @@ public class IssueDetailView extends VerticalLayout
 
         add(new Paragraph("Type: " + issue.getIssueType()));
         add(new Paragraph("Status: " + issue.getStatus()));
+
+        // Keep the primary triage action immediately beneath the issue heading and status.
+        add(new AiTriagePanel(issue.getId(), triageService));
         add(new Paragraph("Created: " + issue.getCreatedAt()));
         add(new Paragraph("Closed: " + issue.getClosedAt()));
 
@@ -62,6 +65,5 @@ public class IssueDetailView extends VerticalLayout
                 ? "None"
                 : issue.getFilesChanged()));
 
-        add(new AiTriagePanel(issue.getId(), triageService));
     }
 }
