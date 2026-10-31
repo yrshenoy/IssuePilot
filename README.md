@@ -101,6 +101,22 @@ To load the 48 fictional issues, open <http://localhost:8080/h2-console>, use JD
 
 The read-only API provides `GET /api/issues` and `GET /api/issues/{id}` (404 for an unknown ID). The SQL fixture is loaded manually; startup does not import it automatically.
 
+## Run AI triage from the Vaadin application (local POC)
+
+IssuePilot also provides a **Run AI Triage** button on the `/issues` detail panel and `/issue/{id}` page. The Spring Boot backend starts the *local Codex CLI* and shows the final advisory report inside Vaadin. This integration is for a **trusted, single-user local demonstration**; it is not a remotely hosted AI service or part of the original internal production integration.
+
+Prerequisites, in addition to the app setup above:
+
+1. Install Codex CLI and sign in **for the same OS user running Java**. Confirm that `codex exec --help` runs from a terminal. The Java process must find the Codex CLI executable on its `PATH`; on Windows it defaults to `codex.cmd`, on macOS/Linux to `codex`.
+2. Pull the latest repository files, including `.agents/skills/issue-pilot/SKILL.md`; start Spring Boot from the repository root. Load the synthetic database first.
+3. Open `http://localhost:8080/issues`, choose an issue (such as **2408**), click **Run AI Triage**, and review the report. A single triage job runs at a time; the UI shows a running state or a helpful failure message.
+
+If IntelliJ does not inherit your terminal's Codex `PATH`, set the environment variable `CODEX_COMMAND` to the **full path** of the executable (on Windows, typically `codex.cmd`). If you launch the application outside the repo root, set `ISSUEPILOT_CODEX_WORKSPACE` to the **absolute repository directory** containing the skill. These are also configurable via `issuepilot.codex.executable` and `issuepilot.codex.workspace` in Spring configuration. Restart the app after changing environment variables.
+
+The backend calls `codex exec --ephemeral --sandbox read-only --cd <repo> --output-last-message <temp-file> "$issue-pilot <issue-id>"` using argument-list execution (**no shell interpolation**). A positive numeric issue ID is the only user-derived command input. It imposes a three-minute timeout, allows at most one active invocation, and deletes temporary report/log files afterward. It does not store generated reports or modify issues.
+
+**Important limitations:** Codex uses its own local authentication and may incur usage costs. A read-only Codex sandbox limits agent filesystem modifications but does not make the entire machine safe from arbitrary untrusted code; run this only with trusted local files, not on an internet-facing or shared system. Local REST access from the Codex sandbox varies by platform and configuration; if Codex cannot reach `localhost:8080`, try the skill in a local Codex terminal first and troubleshoot the environment—do **not** disable sandboxing as a shortcut. The Java unit tests validate command construction, not a real Codex end-to-end run. Human review is always required.
+
 ## Invoke the Codex triage skill
 
 The complete local skill is at [.agents/skills/issue-pilot/SKILL.md](.agents/skills/issue-pilot/SKILL.md). Open Codex in this repository so it can discover the project skill; start a fresh session if it was opened before the skill was added. With the application running and seeded, invoke:
