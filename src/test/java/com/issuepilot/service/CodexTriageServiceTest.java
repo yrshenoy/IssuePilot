@@ -24,13 +24,25 @@ class CodexTriageServiceTest {
     }
 
     @Test
+    void initiallyHasNoActiveJobAndNoStoredReport() {
+        var service = new CodexTriageService("codex", ".");
+        try {
+            assertThat(service.activeIssueId()).isNull();
+            assertThat(service.status(2408).state()).isEqualTo("NOT_STARTED");
+        } finally {
+            service.shutdown();
+        }
+    }
+
+    @Test
     void rejectsInvalidIssueId() {
         var service = new CodexTriageService("codex", ".");
         try {
             assertThatThrownBy(() -> service.commandFor(0, Path.of("report.txt")))
                     .isInstanceOf(IllegalArgumentException.class);
-            var result = service.analyze(-1).join();
-            assertThat(result.success()).isFalse();
+            var result = service.start(-1);
+            assertThat(result.state()).isEqualTo("FAILED");
+            assertThat(service.status(-1).state()).isEqualTo("NOT_STARTED");
         } finally {
             service.shutdown();
         }
