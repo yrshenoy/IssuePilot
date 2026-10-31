@@ -3,6 +3,7 @@ package com.issuepilot.views;
 
 import com.issuepilot.model.Issue;
 import com.issuepilot.repository.IssueRepository;
+import com.issuepilot.service.CodexTriageService;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Paragraph;
@@ -18,9 +19,11 @@ public class IssueDetailView extends VerticalLayout
         implements HasUrlParameter<Long> {
 
     private final IssueRepository repository;
+    private final CodexTriageService triageService;
 
-    public IssueDetailView(IssueRepository repository) {
+    public IssueDetailView(IssueRepository repository, CodexTriageService triageService) {
         this.repository = repository;
+        this.triageService = triageService;
     }
 
     @Override
@@ -58,5 +61,7 @@ public class IssueDetailView extends VerticalLayout
         add(new Paragraph(issue.getFilesChanged() == null
                 ? "None"
                 : issue.getFilesChanged()));
+
+        add(new AiTriagePanel(issue.getId(), triageService));
     }
 }
