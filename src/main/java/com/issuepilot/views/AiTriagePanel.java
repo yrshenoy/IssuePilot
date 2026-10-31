@@ -3,29 +3,44 @@ package com.issuepilot.views;
 import com.issuepilot.service.CodexTriageService;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.details.Details;
 import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 
 /**
- * A per-issue, local-only Codex triage panel.
- * The generated report is advisory and is never persisted or applied to an issue.
+ * Local, human-reviewed AI triage action displayed near the issue heading.
+ * Results are collapsible and are not saved to the issue database.
  */
 public class AiTriagePanel extends VerticalLayout {
 
     public AiTriagePanel(long issueId, CodexTriageService triageService) {
         setWidthFull();
         setPadding(false);
-        add(new H3("AI-assisted triage"));
+        setSpacing(false);
 
-        Paragraph status = new Paragraph("Codex analyzes the selected issue and suggests next steps for human review.");
         Button runButton = new Button("Run AI Triage");
-        TextArea report = new TextArea("Codex report");
+        runButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        Paragraph status = new Paragraph("Advisory analysis · Human review required");
+        status.getStyle().set("color", "var(--lumo-secondary-text-color)");
+
+        HorizontalLayout actions = new HorizontalLayout(runButton, status);
+        actions.setWidthFull();
+        actions.setAlignItems(Alignment.CENTER);
+        actions.setFlexGrow(1, status);
+
+        TextArea report = new TextArea();
         report.setReadOnly(true);
         report.setWidthFull();
         report.setMinHeight("350px");
-        report.setVisible(false);
+        report.setAriaLabel("AI triage report");
+
+        Details results = new Details("AI Triage Results", report);
+        results.setWidthFull();
+        results.setOpened(false);
+        results.setVisible(false);
 
         runButton.addClickListener(event -> {
             UI ui = event.getSource().getUI().orElse(null);
@@ -33,26 +48,26 @@ public class AiTriagePanel extends VerticalLayout {
 
             runButton.setEnabled(false);
             status.setText("Running Codex analysis…");
-            report.setVisible(false);
-            report.clear();
+            results.setVisible(false);
+            results.setOpened(false);
+            report.setValue("");
 
             triageService.analyze(issueId).whenComplete((result, error) -> ui.access(() -> {
-                if (!isAttached()) return; // The user may have selected a different issue.
+                if (!isAttached()) return; // User navigated to another issue.
                 runButton.setEnabled(true);
                 if (error != null) {
                     status.setText("Unable to complete AI triage. Check the application logs.");
-                    return;
-                }
-                if (!result.success()) {
+                } else if (!result.success()) {
                     status.setText(result.message());
-                    return;
+                } else {
+                    status.setText("Analysis complete · Human review required");
+                    report.setValue(result.message());
+                    results.setVisible(true);
+                    results.setOpened(true);
                 }
-                status.setText("Analysis complete — advisory findings; human review required.");
-                report.setValue(result.message());
-                report.setVisible(true);
             }));
         });
 
-        add(runButton, status, report);
+        add(actions, results);
     }
 }
