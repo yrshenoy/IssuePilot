@@ -70,12 +70,13 @@ The diagram is conceptual and omits private implementation details; it is not a 
 - [V1 production case study](docs/v1-production-case-study.md) — problem, collaboration, workflow, evidence, outcomes and lessons.
 - [Conceptual architecture](docs/architecture.md) — integration boundaries, sequence and triage decision logic.
 - [V2 roadmap](docs/v2-roadmap.md) — branch impact, candidate fixes, validation and human gates.
+- [Synthetic POC evaluation report](docs/poc-evaluation-report.md) — eight hand-reviewed Codex scenarios, observed results, limitations and refinements.
 - [Evaluation and safeguards](docs/evaluation-and-guardrails.md) — proposed future metrics, precision checks and risk controls.
 - [Architecture diagrams](docs/diagrams/) — editable Mermaid sources.
 - [Fictional triage example](examples/synthetic-triage-report.md) and [synthetic issue fixtures](examples/synthetic-issues.json).
 
 ## Project status and intended audience
 
-This repository is **documentation and synthetic examples**, not a runnable reproduction of the original skill. It is intended to demonstrate practical AI adoption, operational judgment, collaboration between engineering managers, and incremental engineering planning for Engineering Manager and Senior Engineering Manager audiences.
+This repository currently contains **documentation and synthetic examples**. A separate, independently implemented Java/Vaadin + Spring Boot/H2 POC and Codex skill have been tested locally, but their source code and complete dataset are **not yet committed here**. This repository is not a runnable reproduction of the original internal skill. It is intended to demonstrate practical AI adoption, operational judgment, collaboration between engineering managers, and incremental engineering planning for Engineering Manager and Senior Engineering Manager audiences.
 
 **Privacy and IP boundary:** No proprietary prompts, incident payloads, customer information, source code, authentication details, or internal issue identifiers belong in this repository. See [publication notice](NOTICE.md).
