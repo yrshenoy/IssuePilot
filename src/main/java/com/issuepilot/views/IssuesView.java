@@ -3,6 +3,7 @@ package com.issuepilot.views;
 
 import com.issuepilot.model.Issue;
 import com.issuepilot.repository.IssueRepository;
+import com.issuepilot.service.CodexTriageService;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.H3;
@@ -25,10 +26,13 @@ import java.util.Locale;
 @Route("issues")
 public class IssuesView extends VerticalLayout {
 
+    private final CodexTriageService triageService;
+
     private final VerticalLayout detailsPanel =
             new VerticalLayout();
 
-    public IssuesView(IssueRepository repository) {
+    public IssuesView(IssueRepository repository, CodexTriageService triageService) {
+        this.triageService = triageService;
 
         setSizeFull();
         setPadding(true);
@@ -196,6 +200,8 @@ public class IssuesView extends VerticalLayout {
         detailsPanel.add(new Paragraph(
                 value(issue.getFilesChanged())
         ));
+
+        detailsPanel.add(new AiTriagePanel(issue.getId(), triageService));
     }
 
     private String value(Object value) {
