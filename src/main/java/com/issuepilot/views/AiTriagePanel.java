@@ -35,7 +35,7 @@ public class AiTriagePanel extends VerticalLayout {
         report.setReadOnly(true);
         report.setWidthFull();
         report.setMinHeight("350px");
-        report.setAriaLabel("AI triage report");
+        report.setLabel("Codex report");
 
         Details results = new Details("AI Triage Results", report);
         results.setWidthFull();
