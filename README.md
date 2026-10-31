@@ -77,6 +77,36 @@ The diagram is conceptual and omits private implementation details; it is not a 
 
 ## Project status and intended audience
 
-This repository currently contains **documentation and synthetic examples**. A separate, independently implemented Java/Vaadin + Spring Boot/H2 POC and Codex skill have been tested locally, but their source code and complete dataset are **not yet committed here**. This repository is not a runnable reproduction of the original internal skill. It is intended to demonstrate practical AI adoption, operational judgment, collaboration between engineering managers, and incremental engineering planning for Engineering Manager and Senior Engineering Manager audiences.
+This working tree includes the documentation and synthetic examples plus the independently implemented Java/Vaadin + Spring Boot/H2 local POC, synthetic SQL fixtures, evaluation expectations, and complete Codex triage skill. These application additions are proposed changes pending review. This repository is not a runnable reproduction of the original internal skill. It is intended to demonstrate practical AI adoption, operational judgment, collaboration between engineering managers, and incremental engineering planning for Engineering Manager and Senior Engineering Manager audiences.
 
 **Privacy and IP boundary:** No proprietary prompts, incident payloads, customer information, source code, authentication details, or internal issue identifiers belong in this repository. See [publication notice](NOTICE.md).
+
+## Run the independent local POC
+
+Requirements: JDK 25 or later (the Maven compiler targets Java 25), network access for Maven and Vaadin frontend dependencies, and a browser. The Maven wrapper downloads Maven 3.9.12; a system Maven installation is unnecessary.
+
+From the repository root on Windows PowerShell:
+
+```powershell
+.\mvnw.cmd clean verify
+.\mvnw.cmd spring-boot:run
+```
+
+On macOS/Linux, use `sh ./mvnw clean verify` and `sh ./mvnw spring-boot:run`.
+If Maven selects an unwritable cache, add `"-Dmaven.repo.local=$env:USERPROFILE\.m2\repository"` to the Windows commands.
+
+Open <http://localhost:8080/issues> for the searchable/filterable issue grid and <http://localhost:8080/issue/2401> for one issue after seeding. The application binds to loopback and uses an initially empty H2 database at `./data/issuepilot`. Stop with Ctrl+C. Local database files are ignored by Git.
+
+To load the 48 fictional issues, open <http://localhost:8080/h2-console>, use JDBC URL `jdbc:h2:file:./data/issuepilot`, username `sa`, and an empty password. This is the local demo default, not a copied credential. Run the SQL from [test-data/issuepilot_seed_h2.sql](test-data/issuepilot_seed_h2.sql). Verify the seeded count and follow the manual evaluation rubric in [test-data/README.md](test-data/README.md). Do not use real incident data or expose this unauthenticated demo publicly.
+
+The read-only API provides `GET /api/issues` and `GET /api/issues/{id}` (404 for an unknown ID). The SQL fixture is loaded manually; startup does not import it automatically.
+
+## Invoke the Codex triage skill
+
+The complete local skill is at [.agents/skills/issue-pilot/SKILL.md](.agents/skills/issue-pilot/SKILL.md). Open Codex in this repository so it can discover the project skill; start a fresh session if it was opened before the skill was added. With the application running and seeded, invoke:
+
+```text
+$issue-pilot 2401
+```
+
+Repeat for IDs `2401` through `2408` and compare the evidence with [evaluation expectations](test-data/evaluation_expectations.csv). Codex needs access to the local HTTP endpoints. The skill retrieves the incoming issue, checks other OPEN issues for potential duplicates, searches CLOSED defects and their resolutions, investigates possible feature regressions, identifies relevant automated-test records, and recommends ownership with supporting issue IDs. It reports uncertainty and investigation steps for human review, without changing records. Automated-test issue records describe fictional historical coverage; they are not executable tests in this repository. The skill does not send Slack messages or implement the proposed V2 workflow.

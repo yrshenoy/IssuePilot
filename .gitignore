@@ -1,0 +1,42 @@
+﻿# Build and generated frontend output
+target/
+node_modules/
+.vaadin/
+/frontend/generated/
+/src/main/frontend/generated/
+/dist/
+# Local databases
+/data/
+*.mv.db
+*.trace.db
+*.h2.db
+*.lock.db
+*.db
+# IDE and OS configuration
+.idea/
+.vscode/
+*.iml
+.classpath
+.project
+.settings/
+.DS_Store
+Thumbs.db
+# Secrets and machine-local settings
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+credentials*
+secrets*
+application-local.*
+application-secrets.*
+.codex/config.toml
+# Logs and temporary output
+*.log
+logs/
+*.java~
+*.tmp

@@ -1,0 +1,9 @@
+incoming_id,scenario,relevant_reference_ids,expected_owner_or_uncertain,expected_reasoning,avoid
+2401,Open duplicate detection,2007,Shipping Engineering,Compare MISSING_CUSTOMS_FORM and domestic label conditions; 2007 remains open,No automatic merge or confirmed duplicate
+2402,Potential feature regression,2010;2009;2011,Shipping Engineering,Shared validator refactor #2010 and customs feature #2009 changed related paths; test issue #2011 lacks domestic coverage,Completion dates do not prove deployment or causality
+2403,Historical DBA resolution,2015;2026,Database Performance,Historical inventory query issue resolved with index/query-plan work; existing performance test issue,Do not claim database problem is confirmed without evidence
+2404,Closed defect resolution,2021;2025,Billing Engineering,Similar refund rounding fix and relevant automated tests,Do not report #2039 as active duplicate because it is closed
+2405,Test-coverage discovery,2014;2016,Inventory Engineering,Concurrency over-allocation fix and targeted test issue,A historic fix does not prove current fault cause
+2406,Insufficient evidence,,Unknown,"No relevant cases; ask for reproducible steps, logs, scope and timestamps","Do not manufacture issue links, owner or files"
+2407,Ownership from history,2030;2028;2029,Identity Engineering,Historic SSO callback fix and open related auth issue,Possible open related issue #2029 not necessarily duplicate
+2408,Misleading keyword match,2031;2032;2036,Reporting Engineering or Database Performance,PDF report export is distinct from carrier tracking API; prioritize reports and DBA evidence,Should not classify #2036 as confirmed duplicate or default to Shipping Engineering
