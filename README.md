@@ -14,8 +14,6 @@ The video introduces the operational triage challenge, outlines the original hum
 
 **Portfolio/IP distinction:** The production workflow was co-developed with another engineering manager; the recorded application and issue history are independently created and synthetic. The demo does not show employer-owned code, prompts, or real customer issues.
 
-> **Video upload:** The MP4 link above becomes playable once the corresponding video file is uploaded to [`docs/demo/`](docs/demo/) on GitHub. The README and video title have been prepared; the video itself is a separate upload.
-
 ## At a glance
 
 | Dimension | What happened |
@@ -119,11 +117,11 @@ IssuePilot also provides a **Run AI Triage** button on the `/issues` detail pane
 
 Prerequisites, in addition to the app setup above:
 
-1. Install Codex CLI and sign in **for the same OS user running Java**. Confirm that `codex exec --help` runs from a terminal. The Java process must find the Codex CLI executable on its `PATH`; on Windows it defaults to `codex.cmd`, on macOS/Linux to `codex`.
+1. Install Codex CLI and sign in **for the same OS user running Java**. Confirm that `codex exec --help` runs from a terminal. The Java process must find the Codex CLI executable on its `PATH`; on Windows the application defaults to `codex.exe`, on macOS/Linux to `codex`.
 2. Pull the latest repository files, including `.agents/skills/issue-pilot/SKILL.md`; start Spring Boot from the repository root. Load the synthetic database first.
 3. Open `http://localhost:8080/issues`, choose an issue (such as **2408**), and click **Run AI Triage** immediately below the issue heading and status. On completion, the **AI Triage Results** section expands to display the advisory report; you may collapse it while inspecting the issue. The same action is available near the top of `/issue/{id}`. A single triage job runs at a time; the UI shows a running state or a helpful failure message.
 
-If IntelliJ does not inherit your terminal's Codex `PATH`, set the environment variable `CODEX_COMMAND` to the **full path** of the executable (on Windows, typically `codex.cmd`). If you launch the application outside the repo root, set `ISSUEPILOT_CODEX_WORKSPACE` to the **absolute repository directory** containing the skill. These are also configurable via `issuepilot.codex.executable` and `issuepilot.codex.workspace` in Spring configuration. Restart the app after changing environment variables.
+If IntelliJ does not inherit your terminal's Codex `PATH`, set the environment variable `CODEX_COMMAND` to the **full path** of the executable (on Windows, for example, the full path to `codex.exe`). If you launch the application outside the repo root, set `ISSUEPILOT_CODEX_WORKSPACE` to the **absolute repository directory** containing the skill. These are also configurable via `issuepilot.codex.executable` and `issuepilot.codex.workspace` in Spring configuration. Restart the app after changing environment variables.
 
 The backend calls `codex exec --ephemeral --sandbox read-only --cd <repo> --output-last-message <temp-file> "$issue-pilot <issue-id>"` using argument-list execution (**no shell interpolation**). A positive numeric issue ID is the only user-derived command input. It imposes a three-minute timeout and allows at most one active invocation. Run state and completed reports are **retained in application memory per issue**, so returning to an issue or refreshing the browser restores its latest report while Spring Boot remains running. They are lost when Spring Boot restarts; reports are not written to H2. The UI displays which issue is active and polls for completion, including timeout and CLI diagnostic output. Temporary Codex output files are deleted after processing; issue records are never modified.
 
