@@ -14,6 +14,14 @@ The video introduces the operational triage challenge, outlines the original hum
 
 **Portfolio/IP distinction:** The production workflow was co-developed with another engineering manager; the recorded application and issue history are independently created and synthetic. The demo does not show employer-owned code, prompts, or real customer issues.
 
+## Application preview
+
+IssuePilot provides a local browser for synthetic engineering issues and a **Run AI Triage** action that invokes Codex. In the example below, issue **#2403** is selected, the analysis has completed, and the expanded report highlights potential duplicates, related historical defects, and evidence for human review.
+
+![IssuePilot issue browser with issue #2403 selected and a completed Codex triage report](docs/images/IssuePilot-AI-Triage-Application-Preview.png)
+
+> The application and issue data shown are independent, synthetic portfolio examples. AI findings are advisory and require engineer review.
+
 ## At a glance
 
 | Dimension | What happened |
