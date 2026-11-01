@@ -4,6 +4,18 @@
 
 > **Independent portfolio case study.** The production experience described here is real, but this public repository is an independently written, genericized reconstruction. It is **not** the original employer-owned Codex skill, source code, prompt, incident history, or integration configuration. Fictional examples are explicitly labeled. No employer or vendor endorses this project.
 
+## Video demo — AI-assisted engineering issue triage
+
+**IssuePilot: AI-Assisted Engineering Issue Triage | Architecture & Live Demo** · 6 min 36 sec
+
+[**Watch the IssuePilot demonstration (MP4)**](docs/demo/IssuePilot-AI-Assisted-Engineering-Issue-Triage-Demo.mp4)
+
+The video introduces the operational triage challenge, outlines the original human-reviewed email-to-Codex-to-Slack workflow, and demonstrates a separate Java/Spring Boot/Vaadin proof of concept that analyzes a fictional issue using Codex. It also shows synthetic evaluation scenarios and their limitations.
+
+**Portfolio/IP distinction:** The production workflow was co-developed with another engineering manager; the recorded application and issue history are independently created and synthetic. The demo does not show employer-owned code, prompts, or real customer issues.
+
+> **Video upload:** The MP4 link above becomes playable once the corresponding video file is uploaded to [`docs/demo/`](docs/demo/) on GitHub. The README and video title have been prepared; the video itself is a separate upload.
+
 ## At a glance
 
 | Dimension | What happened |
