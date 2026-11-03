@@ -1,6 +1,6 @@
 # IssuePilot
 
-**AI-assisted enterprise issue triage — engineering leadership portfolio case study**
+**Engineering issue-triage case study based on a production-used AI workflow, with an independent Java/Vaadin demonstration.**
 
 > **Independent portfolio case study.** The production experience described here is real, but this public repository is an independently written, genericized reconstruction. It is **not** the original employer-owned Codex skill, source code, prompt, incident history, or integration configuration. Fictional examples are explicitly labeled. No employer or vendor endorses this project.
 
